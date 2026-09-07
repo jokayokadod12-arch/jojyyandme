@@ -57,6 +57,8 @@ function applyRoleVisibility() {
   document.querySelectorAll("[data-role-only]").forEach(el => {
     el.style.display = (el.dataset.roleOnly === me.role) ? "" : "none";
   });
+  document.getElementById("thoughtsLogTitle").textContent =
+    me.role === "her" ? "WHAT YOU'VE LEFT HIM" : "WHAT SHE'S LEFT YOU";
 
   const activeRoom = document.querySelector(".room.active");
   if (activeRoom && activeRoom.querySelector("[data-role-only]") &&
@@ -117,23 +119,25 @@ function updateTimer() {
 }
 
 // ============================================================
-// THOUGHTS BOX — both write, both read, live from Firestore
+// THOUGHTS BOX — she writes, both read, live from Firestore
 // ============================================================
 function wireThoughts() {
   const thoughtsCol = collection(db, "thoughts");
 
-  document.getElementById("sendThought").addEventListener("click", async () => {
-    const input = document.getElementById("thoughtInput");
-    const text = input.value.trim();
-    if (!text) return;
-    await addDoc(thoughtsCol, {
-      text, authorName: me.name, authorRole: me.role, createdAt: serverTimestamp()
+  if (me.role === "her") {
+    document.getElementById("sendThought").addEventListener("click", async () => {
+      const input = document.getElementById("thoughtInput");
+      const text = input.value.trim();
+      if (!text) return;
+      await addDoc(thoughtsCol, {
+        text, authorName: me.name, authorRole: me.role, createdAt: serverTimestamp()
+      });
+      input.value = "";
+      const confirm = document.getElementById("sendConfirm");
+      confirm.classList.add("show");
+      setTimeout(() => confirm.classList.remove("show"), 2200);
     });
-    input.value = "";
-    const confirm = document.getElementById("sendConfirm");
-    confirm.classList.add("show");
-    setTimeout(() => confirm.classList.remove("show"), 2200);
-  });
+  }
 
   const q = query(thoughtsCol, orderBy("createdAt", "desc"));
   onSnapshot(q, (snap) => {
