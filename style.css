@@ -513,6 +513,13 @@ a { color: inherit; }
   font-family: var(--serif);
   color: var(--ink);
 }
+.bucket-body { flex: 1; min-width: 0; }
+.bucket-meta {
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
 .bucket-item.done .bucket-text { color: var(--ink-soft); text-decoration: line-through; }
 .bucket-remove {
   border: none;

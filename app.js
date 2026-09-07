@@ -57,8 +57,6 @@ function applyRoleVisibility() {
   document.querySelectorAll("[data-role-only]").forEach(el => {
     el.style.display = (el.dataset.roleOnly === me.role) ? "" : "none";
   });
-  document.getElementById("thoughtsLogTitle").textContent =
-    me.role === "her" ? "WHAT YOU'VE LEFT HIM" : "WHAT SHE'S LEFT YOU";
 
   const activeRoom = document.querySelector(".room.active");
   if (activeRoom && activeRoom.querySelector("[data-role-only]") &&
@@ -119,25 +117,23 @@ function updateTimer() {
 }
 
 // ============================================================
-// THOUGHTS BOX — she writes, both read, live from Firestore
+// THOUGHTS BOX — both write, both read, live from Firestore
 // ============================================================
 function wireThoughts() {
   const thoughtsCol = collection(db, "thoughts");
 
-  if (me.role === "her") {
-    document.getElementById("sendThought").addEventListener("click", async () => {
-      const input = document.getElementById("thoughtInput");
-      const text = input.value.trim();
-      if (!text) return;
-      await addDoc(thoughtsCol, {
-        text, authorName: me.name, authorRole: me.role, createdAt: serverTimestamp()
-      });
-      input.value = "";
-      const confirm = document.getElementById("sendConfirm");
-      confirm.classList.add("show");
-      setTimeout(() => confirm.classList.remove("show"), 2200);
+  document.getElementById("sendThought").addEventListener("click", async () => {
+    const input = document.getElementById("thoughtInput");
+    const text = input.value.trim();
+    if (!text) return;
+    await addDoc(thoughtsCol, {
+      text, authorName: me.name, authorRole: me.role, createdAt: serverTimestamp()
     });
-  }
+    input.value = "";
+    const confirm = document.getElementById("sendConfirm");
+    confirm.classList.add("show");
+    setTimeout(() => confirm.classList.remove("show"), 2200);
+  });
 
   const q = query(thoughtsCol, orderBy("createdAt", "desc"));
   onSnapshot(q, (snap) => {
@@ -189,10 +185,16 @@ function wireBucket() {
     }
     el.innerHTML = snap.docs.map(d => {
       const item = d.data();
+      const meta = item.done && item.doneBy
+        ? `checked off by ${escapeHtml(item.doneBy)}`
+        : `added by ${escapeHtml(item.authorName || "")}`;
       return `
         <div class="bucket-item ${item.done ? "done" : ""}" data-id="${d.id}">
           <div class="bucket-check ${item.done ? "done" : ""}" data-action="toggle" data-done="${item.done}"></div>
-          <div class="bucket-text">${escapeHtml(item.text)}</div>
+          <div class="bucket-body">
+            <div class="bucket-text">${escapeHtml(item.text)}</div>
+            <div class="bucket-meta">${meta}</div>
+          </div>
           <button class="bucket-remove" data-action="remove">&times;</button>
         </div>`;
     }).join("");
@@ -204,7 +206,10 @@ function wireBucket() {
     const id = row.dataset.id;
     if (e.target.dataset.action === "toggle") {
       const isDone = e.target.dataset.done === "true";
-      await updateDoc(doc(db, "bucket", id), { done: !isDone });
+      await updateDoc(doc(db, "bucket", id), {
+        done: !isDone,
+        doneBy: !isDone ? me.name : null
+      });
     } else if (e.target.dataset.action === "remove") {
       await deleteDoc(doc(db, "bucket", id));
     }
