@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jojyy &amp; me</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="petal-field" id="petalField"></div>
+
+  <div class="app-shell">
+    <div class="topline">
+      <div class="brand">jojyy <span class="amp">&amp;</span> me</div>
+      <nav class="roomnav" id="roomnav">
+        <button data-room="home" class="active">Home</button>
+        <button data-room="thoughts">Thoughts Box</button>
+        <button data-room="memories">Memories</button>
+        <button data-room="bucket">Bucket List</button>
+        <button data-room="cards" data-role-only="her">Open When</button>
+        <button data-room="reasons" data-role-only="her">Reasons</button>
+      </nav>
+      <div class="who-line">
+        <span id="whoami"></span>
+        <button id="logoutBtn" title="Sign out">Sign out</button>
+      </div>
+    </div>
+
+    <!-- ROOM: HOME / LIVE TIMER -->
+    <section class="room active" id="room-home">
+      <div class="room-inner">
+        <div class="timer-frame">
+          <div class="timer-super">since the first of July</div>
+          <div class="timer-grid" id="timerGrid">
+            <div class="timer-unit"><div class="timer-num" id="t-years">0</div><div class="timer-label">YEARS</div></div>
+            <div class="timer-unit"><div class="timer-num" id="t-days">0</div><div class="timer-label">DAYS</div></div>
+            <div class="timer-unit"><div class="timer-num" id="t-hours">00</div><div class="timer-label">HOURS</div></div>
+            <div class="timer-unit"><div class="timer-num" id="t-mins">00</div><div class="timer-label">MINUTES</div></div>
+            <div class="timer-unit"><div class="timer-num" id="t-secs">00</div><div class="timer-label">SECONDS</div></div>
+          </div>
+          <p class="timer-note">Since I found you on the 1st of July, every one of these seconds has been a little in love with you.</p>
+        </div>
+
+        <div class="home-links">
+          <div class="home-link-card" data-goto="thoughts">
+            <div class="hl-title">Thoughts Box</div>
+            <div class="hl-sub">Leave me whatever's on your mind.</div>
+          </div>
+          <div class="home-link-card" data-goto="memories">
+            <div class="hl-title">Memories</div>
+            <div class="hl-sub">The moments we're both keeping.</div>
+          </div>
+          <div class="home-link-card" data-goto="bucket">
+            <div class="hl-title">Our Bucket List</div>
+            <div class="hl-sub">Everything we're going to do together.</div>
+          </div>
+          <div class="home-link-card" data-goto="cards" data-role-only="her">
+            <div class="hl-title">Open When...</div>
+            <div class="hl-sub">150 little notes for 150 different moments.</div>
+          </div>
+          <div class="home-link-card" data-goto="reasons" data-role-only="her">
+            <div class="hl-title">Why I Love You</div>
+            <div class="hl-sub">Press it whenever you need reminding.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROOM: THOUGHTS BOX -->
+    <section class="room" id="room-thoughts">
+      <div class="room-inner">
+        <div class="room-eyebrow">no need for a reason</div>
+        <h2 class="room-title">Tell me anything</h2>
+        <p class="room-lede">Whatever's sitting in your chest right now — write it here. It comes straight to me.</p>
+
+        <div class="thoughts-box" data-role-only="her">
+          <textarea id="thoughtInput" placeholder="Start typing, Goji..."></textarea>
+          <div class="thoughts-actions">
+            <span class="send-confirm" id="sendConfirm">saved in my heart. ♥</span>
+            <button class="btn-primary" id="sendThought">Send it to him</button>
+          </div>
+        </div>
+
+        <div class="thoughts-log">
+          <div class="thoughts-log-title" id="thoughtsLogTitle">WHAT YOU'VE LEFT HIM</div>
+          <div id="thoughtsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROOM: MEMORIES -->
+    <section class="room" id="room-memories">
+      <div class="room-inner">
+        <div class="room-eyebrow">kept by both of us</div>
+        <h2 class="room-title">Memories</h2>
+        <p class="room-lede">Anything either of us wants to remember — a moment, a photo link, a line from a conversation.</p>
+
+        <div class="thoughts-box">
+          <textarea id="memoryInput" placeholder="Add a memory..."></textarea>
+          <input type="url" id="memoryImageInput" class="cards-search" style="margin:14px 0 0; text-align:left;" placeholder="Optional: paste a photo link (https://...)">
+          <div class="thoughts-actions">
+            <span class="send-confirm" id="memoryConfirm">added to our memories ♥</span>
+            <button class="btn-primary" id="addMemory">Add memory</button>
+          </div>
+        </div>
+
+        <div class="thoughts-log">
+          <div class="thoughts-log-title">OUR MEMORIES</div>
+          <div id="memoriesList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROOM: BUCKET LIST -->
+    <section class="room" id="room-bucket">
+      <div class="room-inner">
+        <div class="room-eyebrow">a life we're building</div>
+        <h2 class="room-title">Our Bucket List</h2>
+        <p class="room-lede">Every dream we want to chase down together — add one whenever it comes to mind.</p>
+
+        <div class="bucket-add">
+          <input type="text" id="bucketInput" placeholder="We travel somewhere we've never been...">
+          <button class="btn-primary" id="bucketAddBtn">Add</button>
+        </div>
+
+        <div class="bucket-list" id="bucketList"></div>
+      </div>
+    </section>
+
+    <!-- ROOM: OPEN WHEN CARDS -->
+    <section class="room" id="room-cards">
+      <div class="room-inner">
+        <div class="room-eyebrow">150 of them</div>
+        <h2 class="room-title">Open When...</h2>
+        <p class="room-lede">Pick the moment that matches how you feel right now, and open it.</p>
+
+        <input type="text" class="cards-search" id="cardsSearch" placeholder="Search a feeling or moment...">
+        <div class="cards-grid" id="cardsGrid"></div>
+      </div>
+    </section>
+
+    <!-- ROOM: REASONS -->
+    <section class="room" id="room-reasons">
+      <div class="room-inner">
+        <div class="room-eyebrow">150 reasons, and counting</div>
+        <h2 class="room-title">Why I Love You</h2>
+        <p class="room-lede">Press the button. Every tap gives you one more reason.</p>
+
+        <div class="reason-stage" id="reasonStage">
+          <div class="reason-card" id="reasonCard">
+            <p id="reasonText">Press below to find out.</p>
+          </div>
+        </div>
+        <div class="reason-count" id="reasonCount"></div>
+        <button class="reason-btn" id="reasonBtn">Why do I love you?</button>
+      </div>
+    </section>
+
+    <div class="room-footer-note">built with love, one section at a time, by him for you.</div>
+  </div>
+
+  <!-- CARD FLIP MODAL -->
+  <div class="card-modal" id="cardModal">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="flip-stage">
+      <div class="flip-inner" id="flipInner">
+        <div class="flip-face front">
+          <div class="fc-eyebrow">OPEN WHEN...</div>
+          <div class="fc-question" id="modalQuestion"></div>
+          <div class="flip-hint">tap the card to open it</div>
+        </div>
+        <div class="flip-face back">
+          <div class="fc-eyebrow">FROM ME, TO YOU</div>
+          <div class="fc-answer" id="modalAnswer"></div>
+          <div class="flip-hint">tap again to close it</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jojyy &amp; me</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="petal-field" id="petalField"></div>
+
+  <div class="login-screen">
+    <form class="login-card" id="loginCard" autocomplete="off">
+      <div class="login-mark">a small private place</div>
+      <h1>jojyy <span class="amp">&amp;</span> me</h1>
+      <p class="login-sub">This one only opens for you.</p>
+
+      <div class="login-form">
+        <label for="keyInput">Who's there?</label>
+        <input type="text" id="keyInput" placeholder="Type your name" autofocus>
+      </div>
+
+      <button type="submit" class="gate-btn">Come in</button>
+      <div class="gate-error" id="gateError"></div>
+    </form>
+  </div>
+
+  <script type="module" src="login.js"></script>
+</body>
+</html>
