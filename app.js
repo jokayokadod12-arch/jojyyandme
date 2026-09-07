@@ -45,7 +45,6 @@ onAuthStateChanged(auth, (user) => {
   applyRoleVisibility();
   startTimer();
   wireThoughts();
-  wireMemories();
   wireBucket();
   if (me.role === "her") wireCardsAndReasons();
 });
@@ -154,52 +153,6 @@ function wireThoughts() {
         <div class="thought-entry">
           <span class="entry-author">${escapeHtml(t.authorName || "")}</span><br>
           ${escapeHtml(t.text)}
-          <time>${when}</time>
-        </div>`;
-    }).join("");
-  });
-}
-
-// ============================================================
-// MEMORIES — both write, both read, live from Firestore
-// ============================================================
-function wireMemories() {
-  const memoriesCol = collection(db, "memories");
-
-  document.getElementById("addMemory").addEventListener("click", async () => {
-    const textInput = document.getElementById("memoryInput");
-    const imageInput = document.getElementById("memoryImageInput");
-    const text = textInput.value.trim();
-    const imageUrl = imageInput.value.trim();
-    if (!text && !imageUrl) return;
-
-    await addDoc(memoriesCol, {
-      text, imageUrl: imageUrl || null,
-      authorName: me.name, authorRole: me.role, createdAt: serverTimestamp()
-    });
-    textInput.value = "";
-    imageInput.value = "";
-
-    const confirm = document.getElementById("memoryConfirm");
-    confirm.classList.add("show");
-    setTimeout(() => confirm.classList.remove("show"), 2200);
-  });
-
-  const q = query(memoriesCol, orderBy("createdAt", "desc"));
-  onSnapshot(q, (snap) => {
-    const el = document.getElementById("memoriesList");
-    if (snap.empty) {
-      el.innerHTML = '<div class="bucket-empty">No memories added yet — start the collection.</div>';
-      return;
-    }
-    el.innerHTML = snap.docs.map(d => {
-      const m = d.data();
-      const when = m.createdAt ? m.createdAt.toDate().toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "just now";
-      return `
-        <div class="thought-entry">
-          <span class="entry-author">${escapeHtml(m.authorName || "")}</span><br>
-          ${m.text ? escapeHtml(m.text) : ""}
-          ${m.imageUrl ? `<img class="memory-photo" src="${escapeHtml(m.imageUrl)}" alt="memory photo">` : ""}
           <time>${when}</time>
         </div>`;
     }).join("");

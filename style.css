@@ -28,6 +28,7 @@ body {
   color: var(--ink);
   background: var(--ivory);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, .display {
@@ -261,12 +262,6 @@ a { color: inherit; }
 }
 #logoutBtn:hover { border-color: var(--wine); color: var(--wine); }
 
-.memory-photo {
-  margin-top: 10px;
-  max-width: 100%;
-  border-radius: 6px;
-  display: block;
-}
 .entry-author {
   display: inline-block;
   font-size: 10.5px;
@@ -738,4 +733,77 @@ a { color: inherit; }
   color: #B7ABA4;
   font-style: italic;
   font-family: var(--serif);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+@media (max-width: 680px) {
+  .login-screen { padding: 16px; }
+  .login-card { padding: 40px 22px 32px; }
+  .login-card h1 { font-size: clamp(28px, 9vw, 36px); }
+
+  .topline {
+    flex-wrap: wrap;
+    padding: 12px 14px;
+    gap: 8px;
+  }
+  .brand { font-size: 17px; }
+
+  .roomnav {
+    order: 3;
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    justify-content: flex-start;
+  }
+  .roomnav::-webkit-scrollbar { display: none; }
+  .roomnav button {
+    padding: 8px 13px;
+    font-size: 11.5px;
+    flex-shrink: 0;
+  }
+
+  .who-line { gap: 8px; }
+  #whoami { display: none; }
+  #logoutBtn { padding: 6px 11px; font-size: 11px; }
+
+  .room { padding: 32px 16px 70px; }
+  .room-title { margin-bottom: 8px; }
+  .room-lede { margin-bottom: 32px; }
+
+  .timer-frame { padding: 30px 8px 20px; }
+  .timer-grid { gap: 10px; row-gap: 18px; }
+  .timer-unit { min-width: 54px; }
+
+  .home-links { margin-top: 36px; }
+  .home-link-card { padding: 16px 18px; }
+
+  .thoughts-box { padding: 18px; }
+  .thoughts-box textarea { font-size: 16px; min-height: 110px; }
+  .thoughts-actions { flex-direction: column-reverse; align-items: stretch; gap: 10px; }
+  .btn-primary { width: 100%; }
+
+  .bucket-add { flex-direction: column; }
+
+  .cards-grid { grid-template-columns: repeat(auto-fill, minmax(115px, 1fr)); gap: 10px; }
+  .env-card-face { font-size: 12.5px; padding: 12px 10px; }
+
+  .card-modal { padding: 16px; }
+  .flip-face { padding: 30px 22px; }
+  .flip-face .fc-question { font-size: 20px; }
+  .flip-face .fc-answer { font-size: 16px; }
+  .modal-close { top: 14px; right: 16px; }
+
+  .reason-card { padding: 32px 22px; }
+  .reason-btn { padding: 14px 28px; font-size: 15px; width: 100%; }
+
+  /* keep inputs at 16px so iOS Safari doesn't auto-zoom on focus */
+  .login-form input,
+  .bucket-add input,
+  .cards-search {
+    font-size: 16px;
+  }
 }

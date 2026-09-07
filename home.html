@@ -16,7 +16,6 @@
       <nav class="roomnav" id="roomnav">
         <button data-room="home" class="active">Home</button>
         <button data-room="thoughts">Thoughts Box</button>
-        <button data-room="memories">Memories</button>
         <button data-room="bucket">Bucket List</button>
         <button data-room="cards" data-role-only="her">Open When</button>
         <button data-room="reasons" data-role-only="her">Reasons</button>
@@ -46,10 +45,6 @@
           <div class="home-link-card" data-goto="thoughts">
             <div class="hl-title">Thoughts Box</div>
             <div class="hl-sub">Leave me whatever's on your mind.</div>
-          </div>
-          <div class="home-link-card" data-goto="memories">
-            <div class="hl-title">Memories</div>
-            <div class="hl-sub">The moments we're both keeping.</div>
           </div>
           <div class="home-link-card" data-goto="bucket">
             <div class="hl-title">Our Bucket List</div>
@@ -85,29 +80,6 @@
         <div class="thoughts-log">
           <div class="thoughts-log-title" id="thoughtsLogTitle">WHAT YOU'VE LEFT HIM</div>
           <div id="thoughtsList"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ROOM: MEMORIES -->
-    <section class="room" id="room-memories">
-      <div class="room-inner">
-        <div class="room-eyebrow">kept by both of us</div>
-        <h2 class="room-title">Memories</h2>
-        <p class="room-lede">Anything either of us wants to remember — a moment, a photo link, a line from a conversation.</p>
-
-        <div class="thoughts-box">
-          <textarea id="memoryInput" placeholder="Add a memory..."></textarea>
-          <input type="url" id="memoryImageInput" class="cards-search" style="margin:14px 0 0; text-align:left;" placeholder="Optional: paste a photo link (https://...)">
-          <div class="thoughts-actions">
-            <span class="send-confirm" id="memoryConfirm">added to our memories ♥</span>
-            <button class="btn-primary" id="addMemory">Add memory</button>
-          </div>
-        </div>
-
-        <div class="thoughts-log">
-          <div class="thoughts-log-title">OUR MEMORIES</div>
-          <div id="memoriesList"></div>
         </div>
       </div>
     </section>
